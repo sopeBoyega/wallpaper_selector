@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wallpaper_selector/data/categories.dart';
 import 'package:wallpaper_selector/screens/browse_page.dart';
+import 'package:wallpaper_selector/screens/category_details.dart';
 import 'package:wallpaper_selector/screens/home_widget.dart';
 // removed unused imports
 import 'package:wallpaper_selector/widgets/text_styles.dart';
@@ -98,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-        child: content,
+        child: CategoryDetailsPage(category: categories[0]),
       ),
     );
   }

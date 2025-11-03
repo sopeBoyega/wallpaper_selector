@@ -18,6 +18,12 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
   );
 
+  static final normalText  = GoogleFonts.poppins(
+    fontSize: 11,
+    fontWeight: FontWeight.w400,
+    color: Color.fromARGB(255, 125,125, 125)
+  );
+
   static final caption = GoogleFonts.poppins(
     fontSize: 12,
     fontWeight: FontWeight.w500, 
