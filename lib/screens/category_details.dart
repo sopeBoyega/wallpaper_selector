@@ -9,6 +9,7 @@ import 'package:wallpaper_selector/widgets/category_smaller_tile.dart';
 import 'package:wallpaper_selector/widgets/colors.dart';
 import 'package:wallpaper_selector/widgets/tags.dart';
 import 'package:wallpaper_selector/widgets/text_styles.dart';
+import 'package:wallpaper_selector/widgets/shared_header.dart';
 
 class CategoryDetailsPage extends StatefulWidget {
   const CategoryDetailsPage({super.key, required this.category});
@@ -23,7 +24,7 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
   bool _isPanelVisible = false;
   @override
   Widget build(BuildContext context) {
-    // final width = MediaQuery.of(context).size.width; // not used
+    final width = MediaQuery.of(context).size.width;
     final mainRow = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +38,7 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
             children: [
               Row(
                 children: [
-                  Icon(Icons.arrow_back),
+                 IconButton(onPressed:() {Navigator.pop(context);}, icon:  Icon(Icons.arrow_back)),
                   SizedBox(width: 5),
                   Text(
                     "Back to Categories",
@@ -223,38 +224,45 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
       ],
     );
 
-    return Stack(
-      children: [
-        // The main content (row with preview)
-        mainRow,
+    return Scaffold(
+      backgroundColor: const Color(0xfff5f5f5),
+      appBar: SharedHeader(width: width),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+        child: Stack(
+          children: [
+            // The main content (row with preview)
+            mainRow,
 
-        if (_isPanelVisible) ...[
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ui.ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
-              child: Container(color: Colors.black.withOpacity(0.25)),
-            ),
-          ),
+            if (_isPanelVisible) ...[
+              Positioned.fill(
+                child: BackdropFilter(
+                  filter: ui.ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
+                  child: Container(color: Colors.black.withOpacity(0.25)),
+                ),
+              ),
 
-          Align(
-            alignment: Alignment.centerRight,
-            child: SettingsPanel(
-              onCancel: () {
-                setState(() {
-                  _isPanelVisible = false;
-                });
-              },
-              onSave: () {
-                // TODO: Add your save logic here
-                print("Settings Saved!");
-                setState(() {
-                  _isPanelVisible = false;
-                });
-              },
-            ),
-          ),
-        ],
-      ],
+              Align(
+                alignment: Alignment.centerRight,
+                child: SettingsPanel(
+                  onCancel: () {
+                    setState(() {
+                      _isPanelVisible = false;
+                    });
+                  },
+                  onSave: () {
+                    // TODO: Add your save logic here
+                    print("Settings Saved!");
+                    setState(() {
+                      _isPanelVisible = false;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
     );
   }
 }

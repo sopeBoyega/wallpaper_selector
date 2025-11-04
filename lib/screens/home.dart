@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:wallpaper_selector/data/categories.dart';
 import 'package:wallpaper_selector/screens/browse_page.dart';
-import 'package:wallpaper_selector/screens/category_details.dart';
+import 'package:wallpaper_selector/screens/favorites.dart';
 import 'package:wallpaper_selector/screens/home_widget.dart';
-// removed unused imports
-import 'package:wallpaper_selector/widgets/text_styles.dart';
+import 'package:wallpaper_selector/screens/settings.dart';
+import 'package:wallpaper_selector/widgets/shared_header.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -78,12 +76,11 @@ class _HomeScreenState extends State<HomeScreen> {
       content = BrowsePage(width: width,);
       break;
     case "Favourites":
-      // TODO: Create and add your Favourites page
-      content = const Center(child: Text("Favourites Page"));
+      content = Favorites();
       break;
     case "Settings":
-      // TODO: Create and add your Settings page
-      content = const Center(child: Text("Settings Page"));
+      
+      content =  SettingsPage();
       break;
     case "Home": // 'Home' will fall through to the default
     default:
@@ -92,48 +89,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xfff5f5f5),
-      appBar: width < 800
-          ? _mobileAppBar()
-          : PreferredSize(
-              preferredSize: const Size.fromHeight(80),
-              child: _desktopNavBar(),
-            ),
+      appBar: SharedHeader(
+        width: width,
+        rightSide: Row(
+          children: [
+            _navButton(Icons.home, "Home"),
+            _navButton(Icons.image, "Browse"),
+            _navButton(Icons.favorite, "Favourites"),
+            _navButton(Icons.settings, "Settings"),
+          ],
+        ),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-        child: CategoryDetailsPage(category: categories[0]),
-      ),
-    );
-  }
-
-  AppBar _mobileAppBar() => AppBar(
-    title: const Text("Wallpaper Studio"),
-    backgroundColor: Colors.white,
-    elevation: 0,
-  );
-
-  Widget _desktopNavBar() {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 30),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              SvgPicture.asset('assets/icons/logo.svg'),
-              SizedBox(width: 5),
-              Text("Wallpaper Studio", style: AppTextStyles.caption),
-            ],
-          ),
-          Row(
-            children: [
-              _navButton(Icons.home, "Home"),
-              _navButton(Icons.image, "Browse"),
-              _navButton(Icons.favorite, "Favourites"),
-              _navButton(Icons.settings, "Settings"),
-            ],
-          ),
-        ],
+        child: content,
       ),
     );
   }
