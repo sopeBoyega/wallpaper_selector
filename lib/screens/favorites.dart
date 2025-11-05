@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wallpaper_selector/screens/browse_page.dart';
+import 'package:wallpaper_selector/screens/home.dart';
 import 'package:wallpaper_selector/widgets/colors.dart';
 
 class Favorites extends StatefulWidget {
@@ -83,7 +84,7 @@ class _FavoritesState extends State<Favorites> {
                    SizedBox(height: 15,),
                    ElevatedButton(
                     onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (ctx) => BrowsePage(width: width)));
+                    Navigator.push(context, MaterialPageRoute(builder: (ctx) => HomeScreen()));
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.lightOrange,

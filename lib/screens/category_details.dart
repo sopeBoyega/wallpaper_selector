@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -24,6 +25,17 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
   bool _isPanelVisible = false;
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> categoryItems = List.generate(6, (index) {
+  final random = Random();
+  final itemNumber = index + 1;
+
+  return {
+    'title': 'Nature $itemNumber',
+    'count': random.nextInt(6) + 1, // random number from 1–6
+    'imagePath': 'assets/images/nature$itemNumber.jpg',
+  };
+});
+
     final width = MediaQuery.of(context).size.width;
     final mainRow = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,10 +107,11 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
                   childAspectRatio: 1.0,
                 ),
                 itemBuilder: (context, index) {
+                   final item = categoryItems[index];
                   return CategorySmallerListTile(
-                    title: "Nature $index",
-                    count: 3,
-                    imagePath: "assets/images/nature1.jpg",
+                    title: item['title'],
+                    count: item['count'],
+                    imagePath: item['imagePath'],
                   );
                 },
               ),
